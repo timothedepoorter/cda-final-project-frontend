@@ -34,7 +34,9 @@ jobs:
         run: flutter pub get
 
       - name: Clean Gradle Cache
-        run: ./gradlew clean
+        run: |
+          cd android
+          ./gradlew clean
 
       - name: Build APK & App Bundle
         run: flutter build apk --release && flutter build appbundle
