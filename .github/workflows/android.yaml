@@ -33,15 +33,15 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean up previous build files
-        run: |
-          rm -rf .gradle
-          rm -rf build
-          rm -rf .flutter-plugins
-          flutter clean
+#      - name: Clean up previous build files
+#        run: |
+#          rm -rf .gradle
+#          rm -rf build
+#          rm -rf .flutter-plugins
+#          flutter clean
 
       - name: Build APK & App Bundle
-        run: flutter build apk --release && flutter build appbundle
+        run: flutter build apk --release --no-daemon --max-workers=1 && flutter build appbundle --no-daemon --max-workers=1
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
