@@ -34,7 +34,7 @@ jobs:
         run: flutter pub get
 
       - name: Build APK & App Bundle
-        run: flutter build apk --release --no-watch-fs && flutter build appbundle --no-watch-fs
+        run: flutter build apk --release && flutter build appbundle
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
