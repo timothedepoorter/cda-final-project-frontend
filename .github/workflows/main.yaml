@@ -37,8 +37,13 @@ jobs:
       - name: Build appBundle
         run: flutter build appbundle
 
-      - name: Build IPA
-        run: flutter build ipa --no-codesign
+      - name: Build IOS
+        run: flutter build ios --no-codesign
+
+      - name: Convert to IPA
+        run: |
+          xcodebuild -workspace Runner.xcworkspace -scheme Runner -sdk iphoneos -configuration Release archive -archivePath build/Runner.xcarchive
+          xcodebuild -exportArchive -archivePath build/Runner.xcarchive -exportOptionsPlist exportOptions.plist -exportPath build/
 
       - name: Compress Archives and IPAs
         run: |
