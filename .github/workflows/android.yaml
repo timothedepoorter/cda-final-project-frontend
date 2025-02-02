@@ -33,8 +33,12 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean Flutter project
-        run: flutter clean
+      - name: Clean up previous build files
+        run: |
+          rm -rf .gradle
+          rm -rf build
+          rm -rf .flutter-plugins
+          flutter clean
 
       - name: Build APK & App Bundle
         run: flutter build apk --release && flutter build appbundle
