@@ -1,0 +1,48 @@
+name: "Build & Release iOS"
+
+on:
+  pull_request:
+    branches:
+      - '**'
+
+jobs:
+  build:
+    name: Build & Release iOS 🍎
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.27.3'
+          channel: 'stable'
+          cache: 'true'
+
+      - name: Install Flutter dependencies
+        run: flutter pub get
+
+      - name: Install CocoaPods dependencies
+        run: |
+          sudo gem install cocoapods
+          cd ios && pod install && cd ..
+
+      - name: Clean Flutter project
+        run: flutter clean
+
+      - name: Build iOS App (Release)
+        run: flutter build ios --release --no-tree-shake-icons --no-codesign
+
+      - name: Export IPA file
+        run: |
+          mkdir -p output
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release -archivePath output/Runner.xcarchive archive
+          xcodebuild -exportArchive -archivePath output/Runner.xcarchive -exportOptionsPlist ios/Runner/ExportOptions.plist -exportPath output/
+
+      - name: Upload iOS artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: iOS-Build
+          path: output/*.ipa
