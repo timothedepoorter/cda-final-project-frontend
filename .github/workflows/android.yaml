@@ -28,15 +28,6 @@ jobs:
           channel: 'stable'
           cache: 'true'
 
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.pub-cache
-            ~/.gradle
-            build
-          key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.yaml') }}
-
       - name: Install dependencies
         run: flutter pub get
 
@@ -44,7 +35,7 @@ jobs:
         run: flutter clean
 
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --no-tree-shake-icons
 
       - name: Build App Bundle
         run: flutter build appbundle --release
