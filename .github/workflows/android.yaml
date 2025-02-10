@@ -34,7 +34,7 @@ jobs:
         run: flutter build apk --release --no-tree-shake-icons --split-per-abi
 
       - name: Build App Bundle
-        run: flutter build appbundle --release
+        run: flutter build appbundle --release --no-tree-shake-icons
 
       - name: Upload Android artifacts
         uses: actions/upload-artifact@v4
