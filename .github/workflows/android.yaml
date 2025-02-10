@@ -33,7 +33,7 @@ jobs:
       - name: Build APK
         run: flutter build apk --release --no-tree-shake-icons --split-per-abi
 
-      - name: Build App Bundle
+      - name: Build App bundle
         run: flutter build appbundle --release --no-tree-shake-icons
 
       - name: Upload Android artifacts
