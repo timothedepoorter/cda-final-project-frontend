@@ -30,6 +30,9 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Fix File Watching Issue
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
       - name: Install dependencies
         run: flutter pub get
 
