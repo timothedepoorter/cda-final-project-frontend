@@ -5,7 +5,6 @@ on:
     branches:
       - '**'
 
-
 jobs:
   build:
     name: Build & Release Android 🤖
@@ -31,11 +30,8 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Clean
-        run: flutter clean
-
       - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+        run: flutter build apk --release --no-tree-shake-icons --split-per-abi
 
       - name: Build App Bundle
         run: flutter build appbundle --release
